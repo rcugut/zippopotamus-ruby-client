@@ -6,6 +6,7 @@
 zeus.json
 custom_plan.rb
 database.yml
+pkg/
 
 # Ignore all logfiles and tempfiles.
 /log/*.log

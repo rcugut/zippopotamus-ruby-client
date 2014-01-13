@@ -79,3 +79,7 @@ And then execute:
 5. Create new Pull Request
 
 
+## Special thanks
+
+Special thanks to [zippopotam.us](http://zippopotam.us) project for the postal codes database and API hosting/maintenance
+
