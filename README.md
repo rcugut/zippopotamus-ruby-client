@@ -67,7 +67,7 @@ And then execute:
     # Works if postal code is a number (although not recommended)
     Zippopotamus.lookup_postal_code(90210)
     #=> #<Place @name="Beverly Hills", @region="California", @region_code="CA", @latitude=34.0901, @longitude=-118.4065, @alternatives=[]>
-
+```
 
 
 ## Contributing
