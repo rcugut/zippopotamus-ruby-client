@@ -5,14 +5,17 @@ It uses [excon](https://github.com/geemus/excon) http client for it's speed and 
 
 ## Installation
 
-Add this line to your application's Gemfile (only available through github for the moment):
+Add this line to your application's Gemfile:
 
-    gem 'zippopotamus-client', github: 'rcugut/zippopotamus-ruby-client'
+    gem 'zippopotamus-client'
 
 And then execute:
 
     $ bundle
 
+Or install the gem via command line:
+
+    $ gem install zippopotamus-client
 
 
 ## Usage
