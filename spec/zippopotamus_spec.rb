@@ -7,7 +7,7 @@ describe Zippopotamus do
     context "valid postal_code with single Place returned" do
       before do
         VCR.use_cassette 'us_90210' do
-          @result = Zippopotamus.lookup_postal_code!('90210')
+          @result = Zippopotamus.lookup_postal_code('90210')
         end
       end
 
@@ -26,7 +26,7 @@ describe Zippopotamus do
     context "valid postal_code with multiple Places returned" do
       before do
         VCR.use_cassette 'fr_01000' do
-          @result = Zippopotamus.lookup_postal_code!('01000', 'fr')
+          @result = Zippopotamus.lookup_postal_code('01000', 'fr')
         end
       end
 
@@ -65,7 +65,7 @@ describe Zippopotamus do
   context "live HTTP tests with US/90210 valid data" do
 
     before do
-      @result = Zippopotamus.lookup_postal_code!('90210')
+      @result = Zippopotamus.lookup_postal_code('90210')
     end
 
     it "returns correct data" do
