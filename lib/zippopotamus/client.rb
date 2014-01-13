@@ -6,8 +6,8 @@ module Zippopotamus
   class Client
 
 
-    def initialize(persistent_connection = true)
-      @connection = Excon.new('http://api.zippopotam.us', persistent: persistent_connection)
+    def initialize(use_persistent_connection = false)
+      @connection = Excon.new('http://api.zippopotam.us', persistent: use_persistent_connection)
     end
 
 
@@ -19,7 +19,12 @@ module Zippopotamus
       raise "Invalid postal_code parameter: '#{postal_code}'" if not_blank_string?(postal_code)
       raise "Invalid country parameter: '#{country}'" if not_blank_string?(country) || country.length != 2
       country = country.downcase
-      r = @connection.get(path: "/#{country}/#{postal_code}")
+      begin
+        r = @connection.get(path: "/#{country}/#{postal_code}")
+      rescue Excon::Errors::SocketError
+        # just retry
+        r = @connection.get(path: "/#{country}/#{postal_code}")
+      end
       if r.status == 200
         return Place.new(*JSON.parse(r.body)['places'])
       else

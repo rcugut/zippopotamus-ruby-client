@@ -7,7 +7,7 @@ require 'zippopotamus/client'
 #
 #   Zippopotamus.configure do |c|
 #     # enable `use_persistent_connection` to keep the connection alive between subsequent calls
-#     c.use_persistent_connection = true
+#     c.use_persistent_connection = fase # default: true
 #   end
 #
 #

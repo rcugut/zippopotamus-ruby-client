@@ -1,4 +1,4 @@
-# Zippopotamus Client (for ruby)
+# Zippopotamus Client (for Ruby)
 
 This is a simple ruby client for the [zippopotam.us](http://zippopotam.us) API.
 It uses [excon](https://github.com/geemus/excon) http client for it's speed and persistent connections support.
@@ -20,12 +20,12 @@ And then execute:
 #### Configure
 
 ```ruby
-	
-	require 'zippopotamus'
+
+    require 'zippopotamus'
 
     Zippopotamus.configure do |c|
       # enable `use_persistent_connection` to keep the connection alive between subsequent calls
-      c.use_persistent_connection = true
+      c.use_persistent_connection = false # default: true
     end
 ```
 
@@ -36,25 +36,25 @@ And then execute:
     # Lookup a zip code by default in US 
     Zippopotamus.lookup_postal_code('90210')
 
-	# returns a Zippopotamus::Place
-	# 	@name: 'Beverly Hills'
-	# 	@region: 'California'
-	# 	@region_code: 'CA'
-	#	@latitude: 34.0901
-	#	@longitude: -118.4065
-	#	@alternatives: []
-	#	#has_alternatives?: false
+    # returns a Zippopotamus::Place
+    #    @name: 'Beverly Hills'
+    #    @region: 'California'
+    #    @region_code: 'CA'
+    #    @latitude: 34.0901
+    #    @longitude: -118.4065
+    #    @alternatives: []
+    #    #has_alternatives?: false
 
 
 
     # Lookup a postal code in France, with multiple place results (alternatives)
     place = Zippopotamus.lookup_postal_code('01000', 'fr')
 
-	# returns the first Place in the list of multiple places
+    # returns the first Place in the list of multiple places
     puts place.name
     #> 'Bourg-en-Bresse'
 
-	# this place has alternatives (with same postal_code)
+    # this place has alternatives (with same postal_code)
     puts place.has_alternatives?
     #> true
 

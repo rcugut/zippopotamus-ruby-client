@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zippopotamus-client (0.1.0)
+    zippopotamus-client (0.1.1)
       excon (>= 0, < 1.0.0)
 
 GEM
