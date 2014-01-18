@@ -12,17 +12,13 @@ require 'zippopotamus/client'
 #
 #
 #
-# Usage
+# Use
 #
 #   # Lookup US zip codes by default
-#   Zippopotamus.lookup_postal_code('90210')
+#   Zippopotamus.lookup_postcode('90210')
 #
 #   # Specify country by 2 letter code
-#   Zippopotamus.lookup_postal_code('01000', 'fr')
-#
-#
-#   # Raise an error when parameters are invalid
-#   Zippopotamus.lookup_postal_code(12345)
+#   Zippopotamus.lookup_postcode('01000', 'fr')
 #
 module Zippopotamus
 
@@ -33,18 +29,19 @@ module Zippopotamus
   end
 
 
-  # lookup a postal_code for a country and return the place(s) for it
+  # lookup a postcode for a country and return the place(s) for it
   #
-  # @param [String] postal_code
+  # @param [String] postcode
   # @param [String] country 2 letter country code (default: 'us')
   # @return [Zippopotamus::Place] place with postal_code for country OR nil if not found
   # @raise if invalid parameters
-  def lookup_postal_code(postal_code, country = 'us')
+  def lookup_postcode(postcode, country = 'us')
     @client ||= Zippopotamus::Client.new(get_configuration.use_persistent_connection)
-    return @client.lookup_postal_code(postal_code, country)
+    return @client.lookup_postcode(postcode, country)
   end
 
-
+  alias_method :lookup_zipcode, :lookup_postcode
+  alias_method :lookup_postal_code, :lookup_postcode
 
   private
 

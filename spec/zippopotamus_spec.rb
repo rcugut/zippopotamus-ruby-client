@@ -7,12 +7,13 @@ describe Zippopotamus do
     context "valid postal_code with single Place returned" do
       before do
         VCR.use_cassette 'us_90210' do
-          @result = Zippopotamus.lookup_postal_code('90210')
+          @result = Zippopotamus.lookup_zipcode('90210')
         end
       end
 
       it "returns correct data" do
         @result.should be_a(Zippopotamus::Place)
+        @result.postcode.should == '90210'
         @result.name.should == 'Beverly Hills'
         @result.region.should == 'California'
         @result.region_code.should == 'CA'
@@ -26,7 +27,7 @@ describe Zippopotamus do
     context "valid postal_code with multiple Places returned" do
       before do
         VCR.use_cassette 'fr_01000' do
-          @result = Zippopotamus.lookup_postal_code('01000', 'fr')
+          @result = Zippopotamus.lookup_postcode('01000', 'fr')
         end
       end
 
@@ -62,14 +63,15 @@ describe Zippopotamus do
 
 
 
-  context "live HTTP tests with US/90210 valid data" do
+  context "live HTTP tests with US/90210" do
 
     before do
-      @result = Zippopotamus.lookup_postal_code('90210')
+      @result = Zippopotamus.lookup_zipcode('90210')
     end
 
     it "returns correct data" do
       @result.should be_a(Zippopotamus::Place)
+      @result.postcode.should == '90210'
       @result.name.should == 'Beverly Hills'
       @result.region.should == 'California'
       @result.region_code.should == 'CA'

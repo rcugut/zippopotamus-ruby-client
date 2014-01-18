@@ -12,21 +12,21 @@ module Zippopotamus
 
 
 
-    # @param [String] postal_code
+    # @param [String] postcode
     # @param [String] country 2 letter country code (default: 'us')
-    def lookup_postal_code(postal_code, country = 'us')
-      postal_code = postal_code.to_s if postal_code.is_a?(Integer)
-      raise "Invalid postal_code parameter: '#{postal_code}'" if not_blank_string?(postal_code)
+    def lookup_postcode(postcode, country = 'us')
+      postcode = postcode.to_s if postcode.is_a?(Integer)
+      raise "Invalid postcode parameter: '#{postcode}'" if not_blank_string?(postcode)
       raise "Invalid country parameter: '#{country}'" if not_blank_string?(country) || country.length != 2
       country = country.downcase
       begin
-        r = @connection.get(path: "/#{country}/#{postal_code}")
+        r = @connection.get(path: "/#{country}/#{postcode}")
       rescue Excon::Errors::SocketError
         # just retry
-        r = @connection.get(path: "/#{country}/#{postal_code}")
+        r = @connection.get(path: "/#{country}/#{postcode}")
       end
       if r.status == 200
-        return Place.new(*JSON.parse(r.body)['places'])
+        return Place.new(postcode, *JSON.parse(r.body)['places'])
       else
         return nil
       end
@@ -47,11 +47,12 @@ module Zippopotamus
 
   class Place
 
-    attr_reader :name, :region, :region_code, :latitude, :longitude
+    attr_reader :postcode, :name, :region, :region_code, :latitude, :longitude
     attr_reader :alternatives
 
-    def initialize(*places)
+    def initialize(postcode, *places)
       place = places.shift
+      @postcode = postcode
       @name = place['place name']
       @region = place['state']
       @region_code = place['state abbreviation']
@@ -60,7 +61,7 @@ module Zippopotamus
 
       @alternatives = []
       places.each do |place|
-        @alternatives << Place.new(place)
+        @alternatives << Place.new(postcode, place)
       end
       @alternatives.freeze
     end

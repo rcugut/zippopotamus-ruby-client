@@ -3,6 +3,9 @@
 This is a simple ruby client for the [zippopotam.us](http://zippopotam.us) API.
 It uses [excon](https://github.com/geemus/excon) http client for it's speed and persistent connections support.
 
+[![Gem Version](https://badge.fury.io/rb/zippopotamus-client.png)](http://badge.fury.io/rb/zippopotamus-client)
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -23,53 +26,54 @@ Or install the gem via command line:
 #### Configure
 
 ```ruby
+require 'zippopotamus'
 
-    require 'zippopotamus'
-
-    Zippopotamus.configure do |c|
-      # enable `use_persistent_connection` to keep the connection alive between subsequent calls
-      c.use_persistent_connection = false # default: true
-    end
+Zippopotamus.configure do |c|
+  # enable `use_persistent_connection` to keep the connection alive between subsequent calls
+  c.use_persistent_connection = false # default: true
+end
 ```
 
-#### Use it
+#### Use
 
 ```ruby
-    
-    # Lookup a zip code by default in US 
-    Zippopotamus.lookup_postal_code('90210')
+# Lookup a zip code (by default country = US)
+place = Zippopotamus.lookup_postcode('90210')
+# or the alias method lookup_zipcode
+place = Zippopotamus.lookup_zipcode('90210')
 
-    # returns a Zippopotamus::Place
-    #    @name: 'Beverly Hills'
-    #    @region: 'California'
-    #    @region_code: 'CA'
-    #    @latitude: 34.0901
-    #    @longitude: -118.4065
-    #    @alternatives: []
-    #    #has_alternatives?: false
-
-
-
-    # Lookup a postal code in France, with multiple place results (alternatives)
-    place = Zippopotamus.lookup_postal_code('01000', 'fr')
-
-    # returns the first Place in the list of multiple places
-    puts place.name
-    #> 'Bourg-en-Bresse'
-
-    # this place has alternatives (with same postal_code)
-    puts place.has_alternatives?
-    #> true
-
-    # get array of Zippotamus::Place representing alternatives (with the same postal_code)
-    puts place.alternatives
-    #> [#<Place @name="Saint-Denis-lès-Bourg", @region="Rhône-Alpes", @region_code="B9", @latitude=46.2022, @longitude=5.1892>]
+# place is a <Zippopotamus::Place>
+#    @postcode: '90210'
+#    @name: 'Beverly Hills'
+#    @region: 'California'
+#    @region_code: 'CA'
+#    @latitude: 34.0901
+#    @longitude: -118.4065
+#    @alternatives: []
+#    #has_alternatives?: false
 
 
 
-    # Works if postal code is a number (although not recommended)
-    Zippopotamus.lookup_postal_code(90210)
-    #=> #<Place @name="Beverly Hills", @region="California", @region_code="CA", @latitude=34.0901, @longitude=-118.4065, @alternatives=[]>
+# Lookup a postcode in France, with multiple place results (alternatives)
+place = Zippopotamus.lookup_postcode('01000', 'fr')
+
+# returns the first Place in the list of multiple places
+puts place.name
+#> 'Bourg-en-Bresse'
+
+# this place has alternatives (with same postal_code)
+puts place.has_alternatives?
+#> true
+
+# get array of Zippotamus::Place representing alternatives (with the same postcode)
+puts place.alternatives
+#> [#<Place @name="Saint-Denis-lès-Bourg", @region="Rhône-Alpes", @region_code="B9", @latitude=46.2022, @longitude=5.1892>]
+
+
+
+# Works if postcode is a number (although not recommended)
+Zippopotamus.lookup_postcode(90210)
+#=> #<Place @name="Beverly Hills", @region="California", @region_code="CA", @latitude=34.0901, @longitude=-118.4065, @alternatives=[]>
 ```
 
 
